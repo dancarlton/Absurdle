@@ -1,0 +1,12 @@
+{
+    "name": "danlo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "spellchecker": "^3.7.1"
+    }
+}
