@@ -50,19 +50,19 @@ initBoard()
 
 // Accept User Input
 
-document.addEventListener("keyup", (e) => {
+document.addEventListener('keyup', (e) => {
 
     if (guessesRemaining === 0) {
         return
     }
 
     let pressedKey = String(e.key)
-    if (pressedKey === "Backspace" && nextLetter !== 0) {
+    if (pressedKey === 'Backspace' && nextLetter !== 0) {
         deleteLetter()
         return
     }
 
-    if (pressedKey === "Enter") {
+    if (pressedKey === 'Enter') {
         checkGuess()
         return
     }
@@ -108,7 +108,13 @@ function deleteLetter() {
 function checkGuess() {
     let row = document.getElementsByClassName('letter-row')[6 - guessesRemaining]
     let guessString = ''
-    let rightGuess = Array.from(rightGuessString && fiveLetterBadWords)
+    let rightGuess = Array.from(rightGuessString || fiveLetterBadWords)
+    
+    if (WORDS.includes(guessString) || BADWORDS.includes(guessString)) {
+        return
+      } else {
+        alert('That word is not in our Dicktionary!')
+      }      
 
     for (const val of currentGuess) {
         guessString += val
@@ -130,7 +136,7 @@ function checkGuess() {
     for (let i = 0; i < 5; i++) {
         let letterColor = ''
         let box = row.children[i]
-        let letter = checkGuess[i]
+        let letter = currentGuess[i]
 
         let letterPosition = rightGuess.indexOf(currentGuess[i])
 
@@ -149,11 +155,13 @@ function checkGuess() {
         setTimeout(() => {
             // shade box
             box.style.backgroundColor = letterColor
-            sadeKeyBoard(letter, letterColor)
+            shadeKeyboard(letter, letterColor)
         }, delay )
 
         if (guessString === rightGuessString) {
             alert('You guessed it right you dirty lil slut!')
+            guessesRemaining = 0
+            return
         } else {
             guessesRemaining -= 1;
             currentGuess = []
@@ -166,7 +174,41 @@ function checkGuess() {
         }
     }   
 }
+checkGuess()
 
+function shadeKeyboard (letter, color) {
+    for (const elem of document.getElementsByClassName('keyboard-button')) {
+        if (elem.textContent === letter) {
+            let oldColor = elem.style.backgroundColor
+            if (oldColor === 'green') {
+                return
+            }
+
+            if (oldColor === 'yellow' && color !== 'green') {
+                return
+            }
+
+            elem.style.backgroundColor = color
+            break
+        }
+    }
+}
+
+document.getElementById('keyboard-cont').addEventListener
+('click', (e) => {
+    const target = e.target
+
+    if (!target.classList.contains('keyboard-button')) {
+        return
+    }
+    let key = target.textContent
+
+    if (key === 'Del') {
+        key = 'Backspace'
+    }
+
+    document.dispatchEvent(new KeyboardEvent('keyup', {'key':key}))
+})
 
 
 

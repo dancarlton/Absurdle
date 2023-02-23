@@ -14,10 +14,12 @@ function formatWords() {
 
 export const WORDS = [
   'which',
+  'suave',
   'there',
   'their',
   'about',
   'would',
+  'watch',
   'these',
   'other',
   'words',
@@ -5882,6 +5884,7 @@ export const BADWORDS = [
     'ejaculating',
     'ejaculatings',
     'ejaculation',
+    'erect',
     'fag',
     'fagging',
     'faggit',
